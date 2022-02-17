@@ -3,32 +3,34 @@
 
 using namespace std;
 
+template<class T>
 class Node
 {
 	public:
-	long long data;
+	T data;
 	Node* next;
-	Node(long long phone_no)
+	Node(T phone_no)
 	{
 		data = phone_no;
 		next = NULL;
 	}
 };
 
+template<class U>
 class link
 {
 	public:
-	Node** hash_table = new Node*[SIZE];
-	void insert_node(long long phone_no, int);
-	int hash_index(long long phone_no, int hash_size);
+	Node<U>** hash_table = new Node<U>*[SIZE];
+	void insert_node(U phone_no, int);
+	int hash_index(U phone_no, int hash_size);
 	void display();
 	void initialize_null();
 	int digit_extration(int);
 	
 };
 
-
-void link::initialize_null()
+template<class U>
+void link<U>::initialize_null()
 {
 	for (int i=0; i<SIZE; ++i)
 	{
@@ -36,7 +38,9 @@ void link::initialize_null()
 	}
 
 }
-void link::display()
+
+template<class U>
+void link<U>::display()
 {
 	cout<<"================================Hash Table================================="<<endl<<endl;
 	cout<<"Index";
@@ -61,7 +65,8 @@ void link::display()
 	}
 }
 
-int link::hash_index(long long phone_no, int hash_size){
+template<class U>
+int link<U>::hash_index(U phone_no, int hash_size){
 	
 	int index = phone_no%hash_size;
     cout<<"Hash Code of: "<<phone_no<<" is: "<<index<<endl;
@@ -69,10 +74,11 @@ int link::hash_index(long long phone_no, int hash_size){
 	
 }
 
-void link::insert_node(long long phone_no, int index)
+template<class U>
+void link<U>::insert_node(U phone_no, int index)
 {
 	
-	Node* new_node = new Node(phone_no);
+	Node<U>* new_node = new Node<U>(phone_no);
 	
 
 	if (hash_table[index] == NULL)
@@ -80,8 +86,8 @@ void link::insert_node(long long phone_no, int index)
 		hash_table[index] = new_node;
 	}
 	else{
-		Node* next_node = new Node(phone_no);
-		Node* temp = hash_table[index];
+		Node<U>* next_node = new Node<U>(phone_no);
+		Node<U>* temp = hash_table[index];
 		while (temp->next != NULL)
 		{
 			temp = temp->next;
@@ -96,7 +102,7 @@ void link::insert_node(long long phone_no, int index)
 int main()
 {
 	int n;
-	link table1;
+	link<long long> table1;
 	long long phone_no;
 	cout<<"How many phone numbers you want to enter: ";
 	cin>>n;
